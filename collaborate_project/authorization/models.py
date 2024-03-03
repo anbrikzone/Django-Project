@@ -1,7 +1,8 @@
 from django.db import models
+from django.forms import ModelForm
 
 class Roles(models.Model):
-    type        = models.CharField(max_length=64)
+    type        = models.CharField(max_length=64, default="User")
 
 class Users(models.Model):
     login       = models.CharField(max_length=64)
@@ -10,4 +11,4 @@ class Users(models.Model):
     last_name   = models.CharField(max_length=128)
     age         = models.SmallIntegerField()
     email       = models.EmailField()
-    roles       = models.ForeignKey(Roles, on_delete=models.DO_NOTHING)
+    role       = models.ForeignKey(Roles, on_delete=models.DO_NOTHING)

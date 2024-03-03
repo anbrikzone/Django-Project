@@ -3,15 +3,15 @@
 {% block header %}{{ header }}{% endblock header %}
 {% block content %}
 <div class="container-fluid text-start my-2 border border-3">
-    <form action="{% url 'signup' %}" method="post">
+    <form action="{% url 'signin' %}" method="post">
         {% csrf_token %}
         <div class="form—group my-2">
         {% for field in form %}
             <div>{{field}}</div>
-            <div class="error">{{field.errors}}</div>
+            <div class="error">{{field.error}}</div>
         {% endfor %}
-        <input type="submit" value="Sign up">
+        <input type="submit" value="Sign in">
     </form>
 </div>
-Do you have an account? <a href="{% url 'signin' %}">Log in</a>
+Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
 {% endblock content %}
