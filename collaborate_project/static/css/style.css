@@ -1,0 +1,16 @@
+/* Colors for navbar links */
+.navbar-light .navbar-nav a.nav-link {
+    color: blue !important;
+}
+
+.navbar-light .navbar-nav a.nav-link:hover {
+    color:darkblue !important;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link {
+    color: blue !important;
+}
+
+.navbar-text a.link {
+    color: blue !important;
+} 

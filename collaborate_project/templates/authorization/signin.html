@@ -3,12 +3,18 @@
 {% block header %}{{ header }}{% endblock header %}
 {% block content %}
 <div class="container-fluid text-start my-2 border border-3">
-    <form action="{% url 'signin' %}" method="post">
+    <form action="{% url 'signin' %}" method="POST">
         {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
         <div class="form—group my-2">
         {% for field in form %}
             <div>{{field}}</div>
-            <div class="error">{{field.error}}</div>
+            <div class="form-error">{{field.errors}}</div>
         {% endfor %}
         <input type="submit" value="Sign in">
     </form>
