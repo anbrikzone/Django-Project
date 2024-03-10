@@ -15,10 +15,15 @@
     color: blue !important;
 } 
 
-.container.project input  {
+/* .container.project input  {
     color: white !important;
 }
 
 .container.project textarea  {
     color: white !important;
-}
+} */
+
+.form-control.bg-secondary::placeholder {
+    color: white;
+    opacity: 1;
+  }
