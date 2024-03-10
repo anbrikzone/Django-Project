@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% block header %}{{ header }}{% endblock header %}
+
+{% block content %}
+<div class="container project">
+    <div class="row">
+        <form action="{% url 'edit_project' project.id %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="project_name" class="form-label">Name:</label>
+                <input class="form-control bg-secondary" name="project_name" id="project_name" type="text" value="{{project.name}}" placeholder="Name of project">
+            </div>
+            <div class="mb-3">
+                <label for="project_description" class="form-label">Description:</label>
+                <textarea class="form-control bg-secondary" name="project_description" id="project_description" placeholder="Describe your project here">{{project.description}}</textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Edit Project">
+        </form>
+    </div>
+</div>
+{% endblock content %}

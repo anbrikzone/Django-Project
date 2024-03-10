@@ -14,3 +14,11 @@
 .navbar-text a.link {
     color: blue !important;
 } 
+
+.container.project input  {
+    color: white !important;
+}
+
+.container.project textarea  {
+    color: white !important;
+}

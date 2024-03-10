@@ -8,30 +8,51 @@
     <div class="row">
       <div class="col-md-4">
         <div class="text-center my-2 py-2 fw-bold fs-6 bg-primary text-white">All Projects</div>
-        <div class="card">
+        {% for project in all_projects %}
+        <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Column 1</h5>
-            <p class="card-text">Content for the first column goes here.</p>
+            <h5 class="card-title">{{project.name}}</h5>
+            <p class="card-text">{{project.description|truncatewords:6}}</p>
           </div>
+          <div class="card-footer text-end">{{project.owner}}, {{ project.created|date:'d.m.Y' }}</div>
         </div>
+        {% empty %}
+        <div class="text-center">There is no any projects</div>
+        {% endfor %}
       </div>
       <div class="col-md-4">
         <div class="text-center my-2 py-2 fw-bold fs-6 bg-primary text-white">Shared with me</div>
-        <div class="card">
+        {% for project in shared_projects %}
+        <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Column 2</h5>
-            <p class="card-text">Content for the second column goes here.</p>
+            <h5 class="card-title">{{project.name}}</h5>
+            <p class="card-text">{{project.description}}</p>
           </div>
         </div>
+        {% empty %}
+        <div class="text-center">There is no any projects</div>
+        {% endfor %}
       </div>
       <div class="col-md-4">
         <div class="text-center my-2 py-2 fw-bold fs-6 bg-primary text-white">Created by me</div>
-        <div class="card">
+        {% for project in my_projects %}
+        <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Column 3</h5>
-            <p class="card-text">Content for the third column goes here.</p>
+            <h5 class="card-title">{{project.name}}</h5>
+            <p class="card-text">Description: {{project.description}}</p>
+                {% if project.users != None %}
+                  <p class="card-text">Project members: {{project.users}}</p>
+                {% endif %}
+            <div class="text-end">
+              <a class="card-link btn btn-success mt-3" href="{% url 'edit_project' project.id %}">Edit</a>
+              <a class="card-link btn btn-danger mt-3" href="{% url 'remove_project' project.id %}">Remove</a>
+            </div>
           </div>
+          <div class="card-footer text-end">{{ project.created|date:'d.m.Y' }}</div>
         </div>
+        {% empty %}
+        <div class="text-center">There is no any projects</div>
+        {% endfor %}
       </div>
     </div>
   </div>

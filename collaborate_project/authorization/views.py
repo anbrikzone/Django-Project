@@ -60,6 +60,13 @@ def signin(request):
         }
     return render(request, "authorization/signin.html", context=context)
 
+def profile(request):
+    context = {
+        'title': "Profile",
+        'header': "Profile",
+        }
+    return render(request, "authorization/profile.html", context=context)
+
 def mylogout(request):
     logout(request)
     return redirect("/")
