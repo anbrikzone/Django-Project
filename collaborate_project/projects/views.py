@@ -11,18 +11,18 @@ from django.db.models import F, OuterRef, Subquery
 def index(request):
     all_projects = Project.objects.all().order_by('-created')
     shared_projects = Project.objects.filter(projectmembers__users__id = request.user.id).order_by('-created')
-    my_projects = Project.objects.filter(owner_id = request.user.id).order_by('-created')
+    # my_projects = Project.objects.filter(owner_id = request.user.id).order_by('-created')
 
-    # my_projects = Project.objects.raw(f'''select
-    #             pp.id
-    #             , pp.name
-    #             , pp.description
-    #             , pp.created
-    #             , group_concat(au.username, ', ') as users 
-    #             from projects_project pp 
-    #             left join projects_projectmember ppm on pp.id = ppm.projects_id 
-    #             left join auth_user au ON au.id = ppm.users_id
-    #             where pp.owner_id = {request.user.id}''')
+    my_projects = Project.objects.raw(f'''select
+                pp.id
+                , pp.name
+                , pp.description
+                , pp.created
+                , group_concat(au.username, ', ') as users 
+                from projects_project pp 
+                left join projects_projectmember ppm on pp.id = ppm.projects_id 
+                left join auth_user au ON au.id = ppm.users_id
+                where pp.owner_id = %s''', [request.user.id])
     
     context = {
         'title': "Projects",

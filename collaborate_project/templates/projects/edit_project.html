@@ -9,15 +9,15 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="project_name" class="form-label">Name:</label>
-                <input class="form-control bg-secondary" name="project_name" id="project_name" type="text" value="{{project.name}}" placeholder="Name of project">
+                <input class="form-control" name="project_name" id="project_name" type="text" value="{{project.name}}" placeholder="Name of project">
             </div>
             <div class="mb-3">
                 <label for="project_description" class="form-label">Description:</label>
-                <textarea class="form-control bg-secondary" name="project_description" id="project_description" placeholder="Describe your project here">{{project.description}}</textarea>
+                <textarea class="form-control" name="project_description" id="project_description" placeholder="Describe your project here">{{project.description}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="project_invite" class="form-label">Invite user:</label>
-                <input class="form-control bg-secondary" name="project_invite" id="project_invite" type="text" placeholder="Enter user email here">
+                <input class="form-control" name="project_invite" id="project_invite" type="text" placeholder="Enter user email here">
             </div>
             <input type="submit" class="btn btn-primary" value="Edit Project">
         </form>
