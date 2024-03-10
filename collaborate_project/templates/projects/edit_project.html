@@ -15,11 +15,29 @@
                 <label for="project_description" class="form-label">Description:</label>
                 <textarea class="form-control" name="project_description" id="project_description" placeholder="Describe your project here">{{project.description}}</textarea>
             </div>
+            {% if members %}
+            <div class="d-flex mb-3">
+                <div class="row align-items-end">
+                    <div class="col">
+                            <label for="select_members" class="form-label">Project members:</label>
+                            <select class="form-select" name="select_members" size="4">
+                                {% for member in members %}
+                                <option value="{{member.0}}">{{member.1}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger mt-3" name="RemoveMember" value="Remove">
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             <div class="mb-3">
                 <label for="project_invite" class="form-label">Invite user:</label>
                 <input class="form-control" name="project_invite" id="project_invite" type="text" placeholder="Enter user email here">
             </div>
-            <input type="submit" class="btn btn-primary" value="Edit Project">
+            <input type="submit" class="btn btn-success" name="EditProject" value="Edit Project">
         </form>
     </div>
 </div>
