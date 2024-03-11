@@ -2,10 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Project, ProjectMember
-
-from django.db.models import CharField, Value
-from django.db.models.functions import Concat
-from django.db.models import F, OuterRef, Subquery
+from django.contrib import messages
 
 @login_required(login_url="/signin")
 def index(request):
@@ -62,17 +59,32 @@ def edit_project(request, id):
             project_description = request.POST.get("project_description")
 
             form = Project.objects.get(pk = id)
-            form.name = project_name
-            form.description = project_description
-            form.save()
+            if form is not None:
+                form.name = project_name
+                form.description = project_description
+                form.save()
 
-            return redirect("index")
+                return redirect("index")
         
         elif request.POST.get("RemoveMember"):
             member_id = request.POST.get("select_members")
             ProjectMember.objects.filter(projects__id = id, users__id = member_id).delete()
             return redirect(request.META.get('HTTP_REFERER'))
-    
+
+        elif request.POST.get("Invite"):
+            project_name = request.POST.get("project_name")
+            email_member = request.POST.get("email_member")
+            member = User.objects.get(email = email_member)
+            project = Project.objects.get(id = id)
+            project_memeber = ProjectMember.objects.filter(projects__id = id, users__id = member.id)
+            if project_memeber:
+                messages.error(request, f"The user with email {email_member} has already been added as a member for the project {project_name}")
+            else:
+                project_memeber = ProjectMember.objects.create(projects = project, users = member)
+                project_memeber.save()
+            
+            return redirect(request.META.get('HTTP_REFERER'))
+        
     project = Project.objects.get(pk = id)
     members = User.objects.filter(projectmember__projects__id = id).values_list('id', 'username')
     context = {

@@ -51,7 +51,7 @@ def signin(request):
                 login(request, user)
                 return redirect('/projects')
             else:
-                messages.error("There is no such user in the system.")
+                messages.error(request, "There is no such user in the system.")
     
     context = {
         'title': "Sign in",
