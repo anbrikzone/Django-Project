@@ -63,3 +63,18 @@ Feel free to contribute to this project by submitting pull requests or reporting
 
 
 ## Screenshots
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/31e7e46d-234e-47e6-ae7d-86f42948909b)
+
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/80ed5300-abfd-4cce-9ae9-fc0e63a7aaa9)
+
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/c15b31b2-7410-4723-94c1-a928977b8e86)
+
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/1ffea0e2-0184-4bee-bb00-ebcb5f98a0c5)
+
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/2c3b0598-3749-42f4-b0d5-67e9e7ead3a9)
+
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/04516922-437e-430c-8732-f96973e749f6)
+
+
+
+
