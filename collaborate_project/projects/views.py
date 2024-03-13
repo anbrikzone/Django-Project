@@ -8,7 +8,6 @@ from django.contrib import messages
 def index(request):
     all_projects = Project.objects.all().order_by('-created')
     shared_projects = Project.objects.filter(projectmembers__users__id = request.user.id).order_by('-created')
-    # my_projects = Project.objects.filter(owner_id = request.user.id).order_by('-created')
 
     my_projects = Project.objects.raw(f'''select 
                 pp.id
@@ -21,14 +20,16 @@ def index(request):
                 left join projects_projectmember ppm on pp.id = ppm.projects_id
                 left join auth_user au on au.id = ppm.users_id
                 where pp.owner_id = %s
-                group by pp.id''', [request.user.id])
-    
+                group by pp.id
+                order by created desc''', [request.user.id])
+    user_info = User.objects.get(pk = request.user.id)
     context = {
         'title': "Projects",
         'header': "Projects",
         'all_projects': all_projects,
         'shared_projects': shared_projects,
         'my_projects': my_projects,
+        'user': user_info,
         }
 
     return render(request, 'projects/index.html', context=context)
@@ -72,38 +73,50 @@ def edit_project(request, id):
             return redirect(request.META.get('HTTP_REFERER'))
 
         elif request.POST.get("Invite"):
-            project_name = request.POST.get("project_name")
             email_member = request.POST.get("email_member")
-            member = User.objects.get(email = email_member)
-            project = Project.objects.get(id = id)
-            project_memeber = ProjectMember.objects.filter(projects__id = id, users__id = member.id)
-            if project_memeber:
-                messages.error(request, f"The user with email {email_member} has already been added as a member for the project {project_name}")
-            else:
-                project_memeber = ProjectMember.objects.create(projects = project, users = member)
-                project_memeber.save()
-            
-            return redirect(request.META.get('HTTP_REFERER'))
+            try:
+                member = User.objects.get(email = email_member)
+                if member.id == request.user.id:
+                    messages.error(request, f"You are owner of this project. You cannot add yourself as member of the project.")
+                else:
+                    project = Project.objects.get(id = id)
+                    project_memeber = ProjectMember.objects.filter(projects__id = id, users__id = member.id)
+                    if project_memeber:
+                        messages.error(request, f"The user with email '{email_member}' has already been added as a member for the project '{project.name}'.")
+                    else:
+                        project_memeber = ProjectMember.objects.create(projects = project, users = member)
+                        project_memeber.save()
+                    
+                        return redirect(request.META.get('HTTP_REFERER'))
+            except:
+                messages.error(request, f"The user with email '{email_member}' doesn't exists.")
+
+    if Project.objects.filter(pk = id, owner = request.user) or request.user.groups.filter(name = 'admin').exists():         
+        project = Project.objects.get(pk = id)
+        members = User.objects.filter(projectmember__projects__id = id).values_list('id', 'username')
+        context = {
+            'title': "Projects",
+            'header': "Projects",
+            'project': project,
+            'members': members,
+            }
+        return render(request, 'projects/edit_project.html', context=context)
+    else:
+        return redirect("index")
         
-    project = Project.objects.get(pk = id)
-    members = User.objects.filter(projectmember__projects__id = id).values_list('id', 'username')
-    context = {
-        'title': "Projects",
-        'header': "Projects",
-        'project': project,
-        'members': members,
-        }
-    return render(request, 'projects/edit_project.html', context=context)
 
 @login_required(login_url="/signin")
 def remove_projectmember(request, id):
     if request.method == 'POST':
         member_id = request.POST.get("select_members")
-        print(member_id)
         ProjectMember.objects.filter(projects__id = id, users__id = member_id).delete()
         return redirect("index")
 
 @login_required(login_url="/signin")
 def remove_project(request, id):
-    Project.objects.filter(id = id).delete()
-    return redirect("index")
+    if Project.objects.filter(pk = id, owner = request.user) or request.user.groups.filter(name = 'admin').exists():    
+        Project.objects.filter(id = id).delete()
+        return redirect("index")
+    else:
+        messages.error(request, f"You cannot remove the project. You don't have permissions.")
+        return redirect("index")

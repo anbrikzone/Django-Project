@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django import forms
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import SignupForm, SigninForm
-# from .models import Users, Roles
 
 # This method shows main page
 # If user is not authorized function return signin/registraion form
@@ -22,12 +20,23 @@ def signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
+            username = request.POST.get("username")
             password1 = request.POST.get("password1")
             password2 = request.POST.get("password2")
+            email = request.POST.get("email")
             if password1 == password2:
-                register = form.save()
-                login(request, register)
-                return redirect('/projects')
+                if not User.objects.filter(email = email) and not User.objects.filter(username = username):
+                    register = form.save()
+                    login(request, register)
+
+                    # check if groups have been created
+                    if not Group.objects.filter(name = 'user').exists() and not Group.objects.filter(name = 'admin').exists():
+                        Group.objects.create(name = 'user')
+                        Group.objects.create(name = 'admin')
+
+                    return redirect('/projects')
+                else:
+                    messages.error(request, "The email or username have been already used.") 
             else:
                 messages.error(request, "Passwords fields are not equal.") 
     context = {
@@ -61,11 +70,16 @@ def signin(request):
     return render(request, "authorization/signin.html", context=context)
 
 def profile(request):
-    context = {
-        'title': "Profile",
-        'header': "Profile",
-        }
-    return render(request, "authorization/profile.html", context=context)
+    if request.user.is_superuser:
+        return redirect('/admin')
+    else:
+        users = User.objects.filter(id = request.user.id)
+        context = {
+            'title': "Profile",
+            'header': "Profile",
+            'users': users,
+            }
+        return render(request, "authorization/profile.html", context=context)
 
 def mylogout(request):
     logout(request)

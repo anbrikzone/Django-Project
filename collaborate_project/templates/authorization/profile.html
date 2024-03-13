@@ -3,5 +3,52 @@
 {% block header %}{{ header }}{% endblock header %}
 
 {% block content %}
-
+<div class="container">
+    <div class="card profile mt-3">
+        <div class="card-header">Profile</div>
+        <div class="card-body">
+            <div class="row mt-3">    
+                <div class="col">
+                Username:
+                </div> 
+                <div class="col">
+                {{user.username}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                Email: 
+                </div>
+                <div class="col">
+                {{user.email}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                Firstname: 
+                </div>
+                <div class="col">
+                {{user.first_name}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                Lastname: 
+                </div>
+                <div class="col">
+                {{user.last_name}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                Date joined: 
+                </div>
+                <div class="col">
+                {{user.date_joined}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end"><a class="btn btn-success disabled">Change</a></div>
+    <card>
+</div>
 {% endblock content %}

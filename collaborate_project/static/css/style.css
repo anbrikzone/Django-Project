@@ -19,6 +19,10 @@ select {
     width: 150px !important;
 } 
 
+.card.profile  {
+    width: 500px !important;
+}
+
 /* .container.project input  {
     color: white !important;
 }

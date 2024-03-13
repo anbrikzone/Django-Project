@@ -16,7 +16,7 @@
                         <div class="alert alert-danger">{{ form.non_field_errors }}</div>
                     {% endif %}
                     {% for message in messages %}
-                        <div class="alert alert-{% if message.error %}danger{% else %}success{% endif %}">{{ message }}</div>
+                        <div class="alert alert-danger">{{ message }}</div>
                     {% endfor %}
                     {% for field in form %}
                         <div class="mb-3">{{field}}</div>
