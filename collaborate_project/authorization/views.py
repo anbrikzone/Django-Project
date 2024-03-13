@@ -24,7 +24,9 @@ def signup(request):
             password1 = request.POST.get("password1")
             password2 = request.POST.get("password2")
             email = request.POST.get("email")
+            # Check if passwords are equal
             if password1 == password2:
+                # Check if username or email have already exist in database
                 if not User.objects.filter(email = email) and not User.objects.filter(username = username):
                     register = form.save()
                     login(request, register)
@@ -46,7 +48,9 @@ def signup(request):
         }
     return render(request, "authorization/signup.html", context=context)
 
+# Allow to signin in our app
 def signin(request):
+    # If user has already authenticated just redirect him on the main page
     if request.user.is_authenticated:
         return redirect('/projects')
     form = SigninForm()
@@ -69,7 +73,9 @@ def signin(request):
         }
     return render(request, "authorization/signin.html", context=context)
 
+# Profile
 def profile(request):
+    # If user is superuser redirect him to django admin panel
     if request.user.is_superuser:
         return redirect('/admin')
     else:
@@ -81,6 +87,7 @@ def profile(request):
             }
         return render(request, "authorization/profile.html", context=context)
 
+# Logout
 def mylogout(request):
     logout(request)
     return redirect("/")

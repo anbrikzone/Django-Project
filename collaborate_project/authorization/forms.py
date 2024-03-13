@@ -19,6 +19,3 @@ class SigninForm(AuthenticationForm):
     username    = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Login', 'class': 'form-control'}))
     password    = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}))
     
-    # class Meta:
-    #     model   = User
-    #     fields  = ['username', 'password']
