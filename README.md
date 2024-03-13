@@ -54,11 +54,12 @@ python manage.py runserver
 
 9. Access the application in your web browser at `http://127.0.0.1:8000/`.
 
-## Screenshots
-*Add screenshots here to showcase the user interface and functionality of the Collaborate application.*
 
 ## Features
 - **Sharing Projects with Members**: Users can share their projects with other team members by inviting them to collaborate, fostering collaboration and teamwork.
 - **Permissions for Users**: Collaborate allows administrators to assign various permissions to users, controlling access to project resources and functionalities based on roles and responsibilities within the team.
 
 Feel free to contribute to this project by submitting pull requests or reporting issues. Happy collaborating!
+
+
+## Screenshots
