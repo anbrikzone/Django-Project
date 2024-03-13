@@ -73,6 +73,9 @@ Feel free to contribute to this project by submitting pull requests or reporting
 
 ![image](https://github.com/anbrikzone/Django-Project/assets/2174324/2c3b0598-3749-42f4-b0d5-67e9e7ead3a9)
 
+![image](https://github.com/anbrikzone/Django-Project/assets/2174324/8bf9d637-59ee-4b51-bde4-8c9c193841eb)
+
+
 ![image](https://github.com/anbrikzone/Django-Project/assets/2174324/04516922-437e-430c-8732-f96973e749f6)
 
 
